@@ -131,11 +131,9 @@ details[open]::details-content { block-size:auto;opacity:1 }
   .extra-link { grid-row:2 }
 }
 
-.testimonial { position:relative;margin-top:.5rem;padding-left:clamp(1.25rem,4vw,2.25rem);border-left:2px solid var(--accent) }
-.testimonial::before { content:"“";position:absolute;top:-1.6rem;left:clamp(1rem,3.5vw,2rem);font-family:var(--title);font-size:4.5rem;line-height:1;color:var(--accent);opacity:.35 }
-.testimonial blockquote { padding-top:1.4rem }
-.testimonial figcaption { margin-top:1.5rem;font-family:var(--sans);font-size:.9rem;font-weight:500;letter-spacing:.04em;color:var(--accent-dark) }
-.testimonial figcaption::before { content:"— " }
+.testimonial { margin-top:.5rem;padding-left:clamp(1.25rem,4vw,2.25rem);border-left:2px solid var(--accent) }
+.testimonial figcaption { font-family:var(--title);font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;color:var(--accent-dark) }
+.testimonial blockquote { margin-top:1rem }
 .testimonial+.testimonial { margin-top:3rem }
 
 .cta { text-align:center }
