@@ -23,6 +23,23 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealer.observe(el));
 
 // Encabezado: sombra al desplazarse, barra de avance de lectura y sección activa en el menú
 const header = document.querySelector('header');
+
+// Menú desplegable en pantallas pequeñas
+const menu = header.querySelector('nav');
+const toggle = document.createElement('button');
+toggle.className = 'menu-toggle';
+toggle.type = 'button';
+toggle.innerHTML = '<span></span>';
+const setMenu = open => {
+  header.classList.toggle('open', open);
+  toggle.setAttribute('aria-expanded', open);
+  toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+};
+setMenu(false);
+toggle.addEventListener('click', () => setMenu(!header.classList.contains('open')));
+menu.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape') setMenu(false); });
+menu.before(toggle);
 const progress = document.querySelector('.progress');
 const onScroll = () => {
   header.classList.toggle('scrolled', window.scrollY > 24);
