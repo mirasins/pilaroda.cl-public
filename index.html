@@ -18,15 +18,27 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Psicóloga Pilar Oda Moreno, terapia psicológica online en Chile">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Psicóloga Pilar Oda · Terapia psicológica online">
+  <meta name="twitter:description" content="Un espacio donde puedes ser tú. No necesitas tenerlo todo claro para comenzar.">
+  <meta name="twitter:image" content="https://pilaroda.cl/assets/og-image.jpg">
   <link rel="icon" href="assets/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/fraunces-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" media="(min-width:641px)">
+  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" media="(max-width:640px)">
   <link rel="stylesheet" href="home.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://pilaroda.cl/#sitio",
+        "url": "https://pilaroda.cl/",
+        "name": "Psicóloga Pilar Oda",
+        "inLanguage": "es-CL",
+        "publisher": { "@id": "https://pilaroda.cl/#pilar" }
+      },
       {
         "@type": ["ProfessionalService", "MedicalBusiness"],
         "@id": "https://pilaroda.cl/#consulta",
@@ -35,6 +47,7 @@
         "logo": "https://pilaroda.cl/assets/logo-pilar-oda.webp",
         "image": "https://pilaroda.cl/assets/og-image.jpg",
         "email": "oda.pili@gmail.com",
+        "telephone": "+56931113691",
         "description": "Psicoterapia individual y acompañamiento parental e infanto-parental desde un enfoque sistémico-narrativo.",
         "areaServed": { "@type": "Country", "name": "Chile" },
         "availableLanguage": "es",
@@ -52,6 +65,7 @@
         "@id": "https://pilaroda.cl/#pilar",
         "name": "Pilar Oda Moreno",
         "jobTitle": "Psicóloga clínica",
+        "knowsAbout": ["Psicoterapia sistémico-narrativa", "Psicología perinatal", "Apego y parentalidad", "Trauma complejo"],
         "url": "https://pilaroda.cl/sobre-mi.html",
         "image": "https://pilaroda.cl/assets/pilar-oda.webp",
         "alumniOf": [

@@ -37,19 +37,24 @@ const spy = new IntersectionObserver(entries => entries.forEach(entry => {
 }), { rootMargin: '-45% 0px -50% 0px' });
 links.forEach((_, id) => spy.observe(document.getElementById(id)));
 
-// Hojas de olivo: ramas que se mecen en los bordes y hojas que caen lentamente
+// Hojas de olivo: ramas que se mecen en los bordes y hojas que vuelan con el viento detrás del contenido
 const LEAF = 'M0 0C12-10 40-10 56 0C40 10 12 10 0 0Z';
 const stem = [[40, 30, 15], [88, 52, 24], [140, 88, 33], [196, 138, 41], [255, 202, 48], [310, 270, 54]];
 const twig = [[165, 66, -8], [212, 64, 3], [256, 74, 14]];
 const leaf = (x, y, angle, i) => `<g transform="translate(${x} ${y}) rotate(${angle})"><path class="leaf" style="--i:${i}" d="${LEAF}"/></g>`;
 const pairs = (points, start) => points.map(([x, y, a], i) => leaf(x, y, a - 48, start + i * 2) + leaf(x, y, a + 44, start + i * 2 + 1)).join('');
 const branch = `<svg viewBox="0 0 400 400" fill="currentColor"><path d="M-10 20C90 40 200 110 330 300M120 76C170 60 232 60 292 92" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>${pairs(stem, 0)}${leaf(330, 300, 58, 12)}${pairs(twig, 13)}${leaf(292, 92, 24, 19)}</svg>`;
-const fall = ([left, time, delay, size]) => `<svg class="fall" viewBox="-4 -14 64 28" style="left:${left}%;--t:${time}s;--w:${delay}s;--s:${size}"><path d="${LEAF}"/></svg>`;
-const behind = [[4, 27, -3, .9], [12, 35, -21, .6], [21, 31, -12, 1.1], [30, 39, -30, .7], [39, 28, -8, 1], [48, 36, -24, .8], [57, 30, -15, 1.2], [66, 41, -35, .6], [74, 29, -5, .9], [82, 34, -18, 1], [89, 38, -27, .7], [96, 32, -10, .85]];
-const front = [[2, 33, -6, .8], [7, 44, -30, 1.1], [12, 38, -19, .7], [86, 36, -12, .9], [91, 46, -34, 1.2], [95, 31, -3, .7], [98, 41, -24, .9], [5, 49, -41, .6]];
+const TONES = ['#6f7a45', '#8b8f58', '#55633a', '#a39a62', '#7d8a4e'];
+// [alto %, duración s, desfase s, tamaño, tono, desenfoque px]
+const flock = [[6, 19, -2, 1.1, 0, 0], [14, 26, -17, .7, 1, 1.5], [22, 16, -9, 1.3, 2, 0], [30, 23, -21, .8, 3, 2], [38, 18, -5, 1, 4, 0], [46, 28, -25, .65, 1, 2.5], [54, 17, -12, 1.25, 0, 0], [62, 24, -3, .85, 2, 1], [70, 20, -15, 1.05, 3, 0], [78, 27, -8, .7, 4, 2], [86, 16, -19, 1.2, 1, 0], [10, 22, -11, .9, 2, .8], [34, 15, -6, 1.4, 4, 0], [50, 21, -14, .95, 0, .6], [66, 25, -22, .75, 3, 1.8], [82, 18, -1, 1.1, 2, 0], [26, 29, -27, .6, 0, 2.5], [58, 14, -7, 1.3, 1, 0]];
+const fly = ([top, time, delay, size, tone, blur]) => `<span class="fly" style="top:${top}%;--t:${time}s;--w:${delay}s;--s:${size};--c:${TONES[tone]};--b:${blur}px;--o:${blur ? .75 : .92}"><span><svg viewBox="-4 -14 64 28"><path d="${LEAF}"/><path class="rib" d="M3 0H50"/></svg></span></span>`;
 const leaves = document.createElement('div');
 leaves.className = 'leaves';
 leaves.setAttribute('aria-hidden', 'true');
-leaves.innerHTML = ['l', 'r', 'bl', 'br'].map(side => `<div class="branch branch-${side}">${branch}</div>`).join('') + front.map(fall).join('');
+leaves.innerHTML = ['l', 'r', 'bl', 'br'].map(side => `<div class="branch branch-${side}">${branch}</div>`).join('');
+const flying = document.createElement('div');
+flying.className = 'flying';
+flying.setAttribute('aria-hidden', 'true');
+flying.innerHTML = flock.map(fly).join('');
+document.querySelector('.backdrop').after(flying);
 document.body.append(leaves);
-document.querySelector('.backdrop').insertAdjacentHTML('beforeend', behind.map(fall).join(''));
