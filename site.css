@@ -39,16 +39,18 @@ h2::after { content:"";display:block;width:64px;height:2px;margin-top:.9rem;back
 /* Encabezado */
 header { position:sticky;top:0;z-index:10;background:rgba(242,240,234,.84);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--line);transition:background .5s var(--ease),box-shadow .5s var(--ease) }
 header.scrolled { background:rgba(242,240,234,.95);box-shadow:0 10px 30px -22px rgba(45,52,54,.7) }
-header .wrap { display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:56px }
-.brand { font-size:1rem;text-decoration:none }
+header .wrap { display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px }
+.brand { display:block;line-height:0 }
+.brand img { width:auto;height:52px }
 nav ul { display:flex;gap:1.5rem;list-style:none;font-family:var(--sans);font-size:.95rem }
 nav a { text-decoration:none;padding:.35rem 0;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s var(--ease),color .3s }
 nav a:hover,nav a.active,nav a[aria-current] { background-size:100% 1px }
 nav a.active,nav a[aria-current] { color:var(--accent-dark) }
 @media(max-width:640px) {
   nav ul { gap:.9rem;font-size:.85rem }
-  .brand { display:none }
-  header .wrap { justify-content:center }
+  html { scroll-padding-top:104px }
+  .brand img { height:40px }
+  header .wrap { flex-direction:column;justify-content:center;gap:0;padding-top:.35rem;padding-bottom:.2rem }
 }
 
 /* Hero */
@@ -115,6 +117,8 @@ details[open]::details-content { block-size:auto;opacity:1 }
 footer { position:relative;z-index:2;background:rgba(242,240,234,.97);border-top:1px solid var(--line);padding:2.5rem 0;font-family:var(--sans);font-size:.85rem }
 footer .wrap { display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem }
 footer a { text-decoration:none }
+.footer-logo { flex-basis:100%;line-height:0 }
+.footer-logo img { width:auto;height:84px }
 footer a:hover { text-decoration:underline }
 footer ul { display:flex;gap:1.25rem;list-style:none }
 
