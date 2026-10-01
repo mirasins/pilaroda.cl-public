@@ -6,7 +6,7 @@
   <title>Sobre mí · Pilar Oda Moreno, psicóloga clínica</title>
   <meta name="description" content="Psicóloga clínica de la Universidad de Chile, con formación en psicología perinatal, apego, trauma complejo y Somatic Experiencing®. Conoce mi enfoque y experiencia.">
   <link rel="canonical" href="https://pilaroda.cl/sobre-mi.html">
-  <meta name="theme-color" content="#304b39">
+  <meta name="theme-color" content="#F2F0EA">
   <meta property="og:type" content="profile">
   <meta property="og:locale" content="es_CL">
   <meta property="og:site_name" content="Psicóloga Pilar Oda">
@@ -19,49 +19,78 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="conversemos.css">
-  <link rel="stylesheet" href="sobre-mi.css">
+  <link rel="preload" href="assets/fonts/fraunces-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" media="(min-width:641px)">
+  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" media="(max-width:640px)">
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
 </head>
-<body class="about-page">
+<body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
-  <header class="site-header">
-    <a class="site-logo" href="./" aria-label="Psicóloga Pilar Oda, inicio"><img src="assets/logo-pilar-oda.webp" width="120" height="120" alt="Psicóloga Pilar Oda"></a>
-    <nav aria-label="Navegación principal"><a href="./">Inicio</a><a href="sobre-mi.html" aria-current="page">Sobre mí</a><a href="servicios.html">Servicios</a><a class="nav-cta" href="contacto.html">Conversemos <span aria-hidden="true">↗</span></a></nav>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <a class="brand" href="./">Pilar Oda Moreno</a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="./">Inicio</a></li>
+          <li><a href="sobre-mi.html" aria-current="page">Sobre mí</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
+
   <main id="contenido">
-    <section class="section about">
-      <img class="portrait" src="assets/pilar-oda.webp" width="800" height="1067" alt="Pilar Oda Moreno, psicóloga clínica, junto a su bebé al aire libre">
+
+    <section class="hero compact" aria-label="Presentación">
       <div>
         <p class="eyebrow">SOBRE MÍ</p>
         <h1>Hola, soy<br><em>Pilar Oda Moreno.</em></h1>
-        <p class="intro">Soy Pilar Oda Moreno, psicóloga clínica.</p>
-        <p>Entiendo la terapia como un espacio de encuentro, donde podamos detenernos, comprender lo que está ocurriendo y comenzar a construir nuevas formas de estar.</p>
-        <p>Mi trabajo se sostiene en la escucha, el respeto y la posibilidad de que cada persona pueda avanzar a su propio ritmo.</p>
       </div>
     </section>
-    <section class="section about-copy">
-      <p class="eyebrow">MI MIRADA</p>
-      <h2>Una terapia basada en el vínculo, la responsabilidad y el respeto.</h2>
-      <div class="perspective-grid">
-        <article class="perspective-card"><span class="eyebrow">01</span><h3>Tu experiencia es el punto de partida</h3><p>La persona es experta en su propia experiencia.</p><p>No porque la terapeuta vea una dirección significa que la persona deba ir hacia ella.</p><p>Cada persona trae una sabiduría y un conocimiento de sí misma que merece ser respetado.</p></article>
-        <article class="perspective-card"><span class="eyebrow">02</span><h3>Un vínculo seguro y ético</h3><p>El vínculo terapéutico debe ser un espacio seguro y ético.</p><p>El lugar de poder de la terapeuta debe ser ejercido con responsabilidad y sin abuso.</p></article>
-        <article class="perspective-card"><span class="eyebrow">03</span><h3>Humanidad para acompañar</h3><p>En momentos de crisis profunda, además del conocimiento técnico, la humanidad compartida y la capacidad de acompañar son fundamentales.</p></article>
-        <article class="perspective-card"><span class="eyebrow">04</span><h3>Comprender la historia, abrir posibilidades</h3><p>La historia importa, pero no para quedar atrapados en ella: comprender patrones permite ampliar las posibilidades de respuesta.</p><p>El pasado tiene un lugar importante, especialmente los vínculos primarios, pero se revisa para ampliar posibilidades actuales y no para quedar atrapados en él.</p></article>
-        <article class="perspective-card"><span class="eyebrow">05</span><h3>Escuchar también al cuerpo</h3><p>Integro aspectos del cuerpo y de la experiencia somática para observar cómo las experiencias se alojan y expresan corporalmente.</p></article>
+
+    <section class="intro">
+      <div class="wrap">
+        <div class="split">
+          <img class="portrait" src="assets/pilar-oda-retrato.webp" width="900" height="900" alt="Retrato de Pilar Oda Moreno, psicóloga clínica">
+          <div data-group>
+            <p class="closing">Soy Pilar Oda Moreno, psicóloga clínica.</p>
+            <p>Entiendo la terapia como un espacio de encuentro, donde podamos detenernos, comprender lo que está ocurriendo y comenzar a construir nuevas formas de estar.</p>
+            <p>Mi trabajo se sostiene en la escucha, el respeto y la posibilidad de que cada persona pueda avanzar a su propio ritmo.</p>
+          </div>
+        </div>
       </div>
     </section>
-    <section class="section about-copy">
-      <p class="eyebrow">FORMACIÓN Y EXPERIENCIA</p>
-      <h2>Un recorrido al servicio del encuentro clínico.</h2>
-      <div class="education-grid">
-        <article class="degree-card"><strong>Título de Psicóloga</strong> — Universidad de Chile (2023), graduada con distinción máxima (6,6).</article>
-        <article class="degree-card"><strong>Título de Asistente Social / Trabajadora Social</strong> — Pontificia Universidad Católica de Chile (2013), graduada con dos votos de distinción (5,8).</article>
+
+    <section class="alt jarron">
+      <div class="wrap" data-group>
+        <p class="eyebrow">MI MIRADA</p>
+        <h2>Una terapia basada en el vínculo, la responsabilidad y el respeto.</h2>
+        <div class="items" data-group>
+          <article><span class="eyebrow">01</span><h3>Tu experiencia es el punto de partida</h3><p>La persona es experta en su propia experiencia.</p><p>No porque la terapeuta vea una dirección significa que la persona deba ir hacia ella.</p><p>Cada persona trae una sabiduría y un conocimiento de sí misma que merece ser respetado.</p></article>
+          <article><span class="eyebrow">02</span><h3>Un vínculo seguro y ético</h3><p>El vínculo terapéutico debe ser un espacio seguro y ético.</p><p>El lugar de poder de la terapeuta debe ser ejercido con responsabilidad y sin abuso.</p></article>
+          <article><span class="eyebrow">03</span><h3>Humanidad para acompañar</h3><p>En momentos de crisis profunda, además del conocimiento técnico, la humanidad compartida y la capacidad de acompañar son fundamentales.</p></article>
+          <article><span class="eyebrow">04</span><h3>Comprender la historia, abrir posibilidades</h3><p>La historia importa, pero no para quedar atrapados en ella: comprender patrones permite ampliar las posibilidades de respuesta.</p><p>El pasado tiene un lugar importante, especialmente los vínculos primarios, pero se revisa para ampliar posibilidades actuales y no para quedar atrapados en él.</p></article>
+          <article><span class="eyebrow">05</span><h3>Escuchar también al cuerpo</h3><p>Integro aspectos del cuerpo y de la experiencia somática para observar cómo las experiencias se alojan y expresan corporalmente.</p></article>
+        </div>
       </div>
-      <div class="career-sections">
-        <details>
-          <summary><span>Especialización y formación continua</span><span class="detail-hint">5 formaciones</span></summary>
-          <ul class="career-list">
+    </section>
+
+    <section class="sombras">
+      <div class="wrap" data-group>
+        <p class="eyebrow">FORMACIÓN Y EXPERIENCIA</p>
+        <h2>Un recorrido al servicio del encuentro clínico.</h2>
+        <div class="degrees" data-group>
+          <article><strong>Título de Psicóloga</strong> — Universidad de Chile (2023), graduada con distinción máxima (6,6).</article>
+          <article><strong>Título de Asistente Social / Trabajadora Social</strong> — Pontificia Universidad Católica de Chile (2013), graduada con dos votos de distinción (5,8).</article>
+        </div>
+        <details class="fold">
+          <summary><span>Especialización y formación continua</span><span>5 formaciones</span></summary>
+          <ul>
             <li>Diplomado de Psicoterapia Sistémica-Narrativa Infanto-Juvenil — Universidad de Chile.</li>
             <li>Diplomatura en Psicología Perinatal.</li>
             <li>Diplomado de Apego, Parentalidad y Desarrollo de la Infancia — FAI.</li>
@@ -69,9 +98,9 @@
             <li>Somatic Experiencing® — Basic Principles.</li>
           </ul>
         </details>
-        <details>
-          <summary><span>Experiencia profesional</span><span class="detail-hint">4 experiencias</span></summary>
-          <ul class="career-list">
+        <details class="fold">
+          <summary><span>Experiencia profesional</span><span>4 experiencias</span></summary>
+          <ul>
             <li><strong>Psicóloga Perinatal</strong> — Unidad de Neonatología, Hospital Clínico San Borja Arriarán (marzo 2025 – julio 2026).</li>
             <li><strong>Psicóloga Clínica</strong> — Consulta Privada (2023 – actualidad).</li>
             <li><strong>Psicóloga Clínica</strong> — Centro de Terapias Vinculares MAVA (ex CIT), 2021–2023.</li>
@@ -80,11 +109,12 @@
         </details>
       </div>
     </section>
-    <section class="section details">
-      <p class="eyebrow">MODALIDAD Y VALOR</p>
-      <h2>Información para comenzar.</h2>
-      <div class="table-wrap">
-        <table>
+
+    <section class="alt">
+      <div class="wrap narrow" data-group>
+        <p class="eyebrow">MODALIDAD Y VALOR</p>
+        <h2>Información para comenzar.</h2>
+        <table class="facts">
           <tbody>
             <tr><th scope="row">Modalidad</th><td>Online</td></tr>
             <tr><th scope="row">Duración</th><td>60 minutos</td></tr>
@@ -94,15 +124,22 @@
             <tr><th scope="row">Presencial</th><td>Podría evaluarse posteriormente en Providencia</td></tr>
           </tbody>
         </table>
+        <a class="btn" href="contacto.html">Conversemos</a>
       </div>
-      <a class="button" href="contacto.html">Conversemos <span aria-hidden="true">↗</span></a>
     </section>
+
   </main>
-  <footer class="site-footer">
-    <img src="assets/icono-pilar.webp" width="72" height="72" alt="" loading="lazy">
-    <a class="brand" href="./">Psicóloga Pilar Oda<span>PSICOLOGÍA &amp; BIENESTAR</span></a>
-    <a href="mailto:oda.pili@gmail.com">oda.pili@gmail.com</a>
-    <p class="copyright">© 2026 Pilar Oda Moreno · Un espacio para escucharte.</p>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="y">2026</span> Pilar Oda Moreno. Todos los derechos reservados.</span>
+      <ul>
+        <li><a href="./">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <a href="https://wa.me/56931113691" target="_blank" rel="noopener">WhatsApp +56 9 3111 3691</a>
+    </div>
   </footer>
 </body>
 </html>

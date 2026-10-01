@@ -1,6 +1,6 @@
 'use strict';
 document.documentElement.classList.add('js');
-document.querySelector('#y').textContent = new Date().getFullYear();
+document.querySelectorAll('#y').forEach(el => { el.textContent = new Date().getFullYear(); });
 
 // Aparición y deslizamiento de los contenidos al entrar en pantalla
 const reveal = (el, kind, i = 0) => {
@@ -8,10 +8,10 @@ const reveal = (el, kind, i = 0) => {
   el.style.setProperty('--d', `${Math.min(i, 4) * 90}ms`);
 };
 document.querySelectorAll('main section:not(.hero) > .wrap').forEach(panel => reveal(panel, 'panel'));
-const groups = document.querySelectorAll('main section:not(.hero) > .narrow, .about-grid > div, .services-head, .cards, .formacion, .formacion ul, .cta .wrap, #quien-soy > .wrap, #servicios > .wrap');
+const groups = document.querySelectorAll('main section:not(.hero) > .narrow, .about-grid > div, .services-head, .cards, .formacion, .formacion ul, .cta .wrap, #quien-soy > .wrap, #servicios > .wrap, .about-head, [data-group]');
 groups.forEach(group => [...group.children].forEach((el, i) => {
-  if (el.matches('.about-grid, .cards, .services-head, .formacion, ul')) return;
-  const kind = el.matches('h2, h3') ? 'left' : el.matches('li') ? 'right' : el.matches('.card, .btn, .services-more, .cta-alt, .cta p') ? 'up' : 'left';
+  if (el.matches('.about-grid, .about-head, .cards, .services-head, .formacion, ul, [data-group]')) return;
+  const kind = el.matches('h2, h3') ? 'left' : el.matches('li') ? 'right' : el.matches('.card, .btn, .services-more, .cta-alt, .cta p, article, details, img, form, table, blockquote, dl') ? 'up' : 'left';
   reveal(el, kind, i);
 }));
 const revealer = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -46,8 +46,8 @@ const pairs = (points, start) => points.map(([x, y, a], i) => leaf(x, y, a - 48,
 const branch = `<svg viewBox="0 0 400 400" fill="currentColor"><path d="M-10 20C90 40 200 110 330 300M120 76C170 60 232 60 292 92" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>${pairs(stem, 0)}${leaf(330, 300, 58, 12)}${pairs(twig, 13)}${leaf(292, 92, 24, 19)}</svg>`;
 const TONES = ['#6f7a45', '#8b8f58', '#55633a', '#a39a62', '#7d8a4e'];
 // [alto %, duración s, desfase s, tamaño, tono, desenfoque px]
-const flock = [[6, 19, -2, 1.1, 0, 0], [14, 26, -17, .7, 1, 1.5], [22, 16, -9, 1.3, 2, 0], [30, 23, -21, .8, 3, 2], [38, 18, -5, 1, 4, 0], [46, 28, -25, .65, 1, 2.5], [54, 17, -12, 1.25, 0, 0], [62, 24, -3, .85, 2, 1], [70, 20, -15, 1.05, 3, 0], [78, 27, -8, .7, 4, 2], [86, 16, -19, 1.2, 1, 0], [10, 22, -11, .9, 2, .8], [34, 15, -6, 1.4, 4, 0], [50, 21, -14, .95, 0, .6], [66, 25, -22, .75, 3, 1.8], [82, 18, -1, 1.1, 2, 0], [26, 29, -27, .6, 0, 2.5], [58, 14, -7, 1.3, 1, 0]];
-const fly = ([top, time, delay, size, tone, blur]) => `<span class="fly" style="top:${top}%;--t:${time}s;--w:${delay}s;--s:${size};--c:${TONES[tone]};--b:${blur}px;--o:${blur ? .75 : .92}"><span><svg viewBox="-4 -14 64 28"><path d="${LEAF}"/><path class="rib" d="M3 0H50"/></svg></span></span>`;
+const flock = [[12, 34, -4, .8, 1, 1.5], [30, 42, -22, .6, 3, 2.5], [48, 38, -13, .7, 0, 2], [66, 46, -31, .55, 2, 3], [84, 36, -8, .75, 4, 1.5]];
+const fly = ([top, time, delay, size, tone, blur]) => `<span class="fly" style="top:${top}%;--t:${time}s;--w:${delay}s;--s:${size};--c:${TONES[tone]};--b:${blur}px;--o:.2"><span><svg viewBox="-4 -14 64 28"><path d="${LEAF}"/><path class="rib" d="M3 0H50"/></svg></span></span>`;
 const leaves = document.createElement('div');
 leaves.className = 'leaves';
 leaves.setAttribute('aria-hidden', 'true');

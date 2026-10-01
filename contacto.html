@@ -6,7 +6,7 @@
   <title>Conversemos · Agenda una primera conversación | Psicóloga Pilar Oda</title>
   <meta name="description" content="Consulta disponibilidad con la psicóloga Pilar Oda. Atención psicológica online, sesiones de 60 minutos y tarifa estándar de $30.000.">
   <link rel="canonical" href="https://pilaroda.cl/contacto.html">
-  <meta name="theme-color" content="#304b39">
+  <meta name="theme-color" content="#F2F0EA">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_CL">
   <meta property="og:site_name" content="Psicóloga Pilar Oda">
@@ -19,62 +19,89 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="conversemos.css">
+  <link rel="preload" href="assets/fonts/fraunces-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" media="(min-width:641px)">
+  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" media="(max-width:640px)">
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
   <script src="conversemos.js" defer></script>
 </head>
-<body class="conversation-page">
+<body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
-  <header class="site-header">
-    <a class="site-logo" href="./" aria-label="Psicóloga Pilar Oda, inicio"><img src="assets/logo-pilar-oda.webp" width="120" height="120" alt="Psicóloga Pilar Oda"></a>
-    <nav aria-label="Navegación principal"><a href="./">Inicio</a><a href="sobre-mi.html">Sobre mí</a><a href="servicios.html">Servicios</a><a class="nav-cta" href="contacto.html" aria-current="page">Conversemos <span aria-hidden="true">↗</span></a></nav>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <a class="brand" href="./">Pilar Oda Moreno</a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="./">Inicio</a></li>
+          <li><a href="sobre-mi.html">Sobre mí</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main id="contenido" class="conversation-main">
-    <div class="conversation-intro">
-      <p class="eyebrow">UN PRIMER ENCUENTRO</p>
-      <h1>¿Conversamos?</h1>
-      <p>No hace falta saber por dónde empezar.<br>Puedes comenzar con un hola.</p>
-    </div>
-    <div class="conversation-layout">
-      <aside class="conversation-aside">
-        <div class="conversation-note">
-          <p class="eyebrow">A TU RITMO</p>
-          <h2>Un espacio<br> para escucharte.</h2>
-          <p>Si estás pensando en comenzar un proceso, puedes escribirme para consultar disponibilidad o resolver tus dudas.</p>
-          <a class="email-link" href="mailto:oda.pili@gmail.com"><span>ESCRÍBEME DIRECTAMENTE</span>oda.pili@gmail.com <span aria-hidden="true">↗</span></a>
+
+  <main id="contenido">
+
+    <section class="hero compact" aria-label="Presentación">
+      <div>
+        <p class="eyebrow">UN PRIMER ENCUENTRO</p>
+        <h1>¿Conversamos?</h1>
+        <p class="lead">No hace falta saber por dónde empezar.<br>Puedes comenzar con un hola.</p>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="wrap">
+        <div class="contact-grid">
+          <aside data-group>
+            <p class="eyebrow">A TU RITMO</p>
+            <h2>Un espacio<br> para escucharte.</h2>
+            <p>Si estás pensando en comenzar un proceso, puedes escribirme para consultar disponibilidad o resolver tus dudas.</p>
+            <a class="email-link" href="mailto:oda.pili@gmail.com"><span>ESCRÍBEME DIRECTAMENTE</span>oda.pili@gmail.com <span aria-hidden="true">→</span></a>
+            <h2>Tu sesión</h2>
+            <dl class="facts">
+              <div><dt>Modalidad</dt><dd>Online</dd></div>
+              <div><dt>Duración</dt><dd>60 minutos</dd></div>
+              <div><dt>Tarifa estándar</dt><dd>$30.000 <span>por sesión</span></dd></div>
+            </dl>
+            <p class="small">Se emite boleta de honorarios.</p>
+          </aside>
+          <div role="region" aria-labelledby="message-title" data-group>
+            <p class="eyebrow">HABLEMOS</p>
+            <h2 id="message-title">Te leo.</h2>
+            <p>Cuéntame cómo te llamas y sobre qué te gustaría conversar.</p>
+            <form id="message-form">
+              <label for="name">Tu nombre</label><input id="name" name="name" autocomplete="given-name" placeholder="¿Cómo te llamas?" maxlength="80" required>
+              <label for="subject">¿En qué puedo orientarte?</label><select id="subject" name="subject"><option>Quiero comenzar terapia</option><option>Consultar disponibilidad</option><option>Tengo una pregunta</option></select>
+              <label for="message">Tu mensaje <span>(opcional)</span></label><textarea id="message" name="message" rows="5" maxlength="1500" placeholder="Hola Pilar, me gustaría…"></textarea>
+              <p class="small">Comparte solo tu consulta general; no necesitas incluir información clínica.</p>
+              <button class="btn" type="submit">Preparar mi mensaje</button>
+              <p class="small">Se abrirá tu aplicación de correo para que revises y envíes el mensaje.</p>
+              <p id="message-status" role="status" aria-live="polite"></p>
+              <noscript><p>Puedes escribirme directamente a <a href="mailto:oda.pili@gmail.com">oda.pili@gmail.com</a>.</p></noscript>
+            </form>
+          </div>
         </div>
-        <div class="session-details">
-          <h2>Tu sesión</h2>
-          <dl>
-            <div><dt>Modalidad</dt><dd>Online</dd></div>
-            <div><dt>Duración</dt><dd>60 minutos</dd></div>
-            <div><dt>Tarifa estándar</dt><dd>$30.000 <span>por sesión</span></dd></div>
-          </dl>
-          <p>Se emite boleta de honorarios.</p>
-        </div>
-      </aside>
-      <section class="message-card" aria-labelledby="message-title">
-        <p class="eyebrow">HABLEMOS</p>
-        <h2 id="message-title">Te leo.</h2>
-        <p class="form-intro">Cuéntame cómo te llamas y sobre qué te gustaría conversar.</p>
-        <form id="message-form">
-          <label for="name">Tu nombre</label><input id="name" name="name" autocomplete="given-name" placeholder="¿Cómo te llamas?" maxlength="80" required>
-          <label for="subject">¿En qué puedo orientarte?</label><select id="subject" name="subject"><option>Quiero comenzar terapia</option><option>Consultar disponibilidad</option><option>Tengo una pregunta</option></select>
-          <label for="message">Tu mensaje <span>(opcional)</span></label><textarea id="message" name="message" rows="5" maxlength="1500" placeholder="Hola Pilar, me gustaría…"></textarea>
-          <p class="privacy-note">Comparte solo tu consulta general; no necesitas incluir información clínica.</p>
-          <button class="button" type="submit">Preparar mi mensaje <span aria-hidden="true">↗</span></button>
-          <p class="delivery-note">Se abrirá tu aplicación de correo para que revises y envíes el mensaje.</p>
-          <p id="message-status" role="status" aria-live="polite"></p>
-          <noscript><p>Puedes escribirme directamente a <a href="mailto:oda.pili@gmail.com">oda.pili@gmail.com</a>.</p></noscript>
-        </form>
-      </section>
-    </div>
+      </div>
+    </section>
+
   </main>
-  <footer class="site-footer">
-    <img src="assets/icono-pilar.webp" width="72" height="72" alt="" loading="lazy">
-    <a class="brand" href="./">Psicóloga Pilar Oda<span>PSICOLOGÍA &amp; BIENESTAR</span></a>
-    <a href="mailto:oda.pili@gmail.com">oda.pili@gmail.com</a>
-    <p class="copyright">© 2026 Pilar Oda Moreno · Un espacio para escucharte.</p>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="y">2026</span> Pilar Oda Moreno. Todos los derechos reservados.</span>
+      <ul>
+        <li><a href="./">Inicio</a></li>
+        <li><a href="sobre-mi.html">Sobre mí</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+      </ul>
+      <a href="https://wa.me/56931113691" target="_blank" rel="noopener">WhatsApp +56 9 3111 3691</a>
+    </div>
   </footer>
 </body>
 </html>

@@ -5,20 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Página no encontrada · Psicóloga Pilar Oda</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#304b39">
+  <meta name="theme-color" content="#F2F0EA">
   <link rel="icon" href="/assets/favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/site.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="site-logo" href="/" aria-label="Psicóloga Pilar Oda, inicio"><img src="/assets/logo-pilar-oda.webp" width="120" height="120" alt="Psicóloga Pilar Oda"></a>
-    <nav aria-label="Navegación principal"><a href="/">Inicio</a><a href="/sobre-mi.html">Sobre mí</a><a href="/servicios.html">Servicios</a><a class="nav-cta" href="/contacto.html">Conversemos <span aria-hidden="true">↗</span></a></nav>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <a class="brand" href="/">Pilar Oda Moreno</a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/sobre-mi.html">Sobre mí</a></li>
+          <li><a href="/servicios.html">Servicios</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main class="not-found">
-    <p class="eyebrow">ERROR 404</p>
-    <h1>Esta página<br>no <em>existe.</em></h1>
-    <p>Puede que el enlace haya cambiado. Te invito a volver al inicio y seguir desde ahí, a tu ritmo.</p>
-    <a class="button" href="/">Volver al inicio <span aria-hidden="true">↗</span></a>
+
+  <main>
+    <section class="hero" aria-label="Página no encontrada">
+      <div>
+        <p class="eyebrow">ERROR 404</p>
+        <h1>Esta página<br>no <em>existe.</em></h1>
+        <p class="lead">Puede que el enlace haya cambiado. Te invito a volver al inicio y seguir desde ahí, a tu ritmo.</p>
+        <a class="btn" href="/">Volver al inicio</a>
+      </div>
+    </section>
   </main>
 </body>
 </html>
