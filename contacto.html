@@ -21,10 +21,11 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/marcellus-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/fraunces-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" media="(min-width:641px)">
-  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" media="(max-width:640px)">
+  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width:641px)">
+  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width:640px)">
+  <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="site.css">
-  <script src="site.js" defer></script>
+  <script src="site.js" defer onerror="document.documentElement.classList.remove('js')"></script>
   <script src="conversemos.js" defer></script>
 </head>
 <body>
@@ -34,7 +35,7 @@
 
   <header>
     <div class="wrap">
-      <a class="brand" href="./"><img src="assets/logo-ps-pilar-oda.webp" width="640" height="223" alt="Ps. Pilar Oda, inicio"></a>
+      <a class="brand" href="./"><img src="assets/logo-ps-pilar-oda.webp" width="400" height="139" fetchpriority="high" alt="Ps. Pilar Oda, inicio"></a>
       <nav aria-label="Principal">
         <ul>
           <li><a href="./">Inicio</a></li>
@@ -96,7 +97,7 @@
 
   <footer>
     <div class="wrap">
-      <a class="footer-logo" href="./"><img src="assets/logo-ps-pilar-oda.webp" width="640" height="223" loading="lazy" alt="Ps. Pilar Oda"></a>
+      <a class="footer-logo" href="./"><img src="assets/logo-ps-pilar-oda.webp" width="400" height="139" loading="lazy" alt="Ps. Pilar Oda"></a>
       <span>© <span id="y">2026</span> Pilar Oda Moreno. Todos los derechos reservados.</span>
       <ul>
         <li><a href="./">Inicio</a></li>

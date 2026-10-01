@@ -1,5 +1,4 @@
 'use strict';
-document.documentElement.classList.add('js');
 document.querySelectorAll('#y').forEach(el => { el.textContent = new Date().getFullYear(); });
 
 // Aparición y deslizamiento de los contenidos al entrar en pantalla
@@ -41,13 +40,23 @@ menu.addEventListener('click', event => { if (event.target.closest('a')) setMenu
 document.addEventListener('keydown', event => { if (event.key === 'Escape') setMenu(false); });
 menu.before(toggle);
 const progress = document.querySelector('.progress');
-const onScroll = () => {
+let scrollMax = 0, ticking = false;
+const measure = () => { scrollMax = document.documentElement.scrollHeight - window.innerHeight; };
+const paint = () => {
+  ticking = false;
   header.classList.toggle('scrolled', window.scrollY > 24);
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+  progress.style.transform = `scaleX(${scrollMax > 0 ? Math.min(window.scrollY / scrollMax, 1) : 0})`;
 };
+const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(paint); } };
 window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
+window.addEventListener('load', () => { measure(); onScroll(); });
+measure();
 onScroll();
+
+// Secciones cerca de la pantalla: cargan su imagen de fondo y activan el vaivén de sus hojas
+const nearby = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('seen', entry.isIntersecting)), { rootMargin: '500px 0px' });
+document.querySelectorAll('main section').forEach(section => nearby.observe(section));
 const links = new Map([...document.querySelectorAll('nav a[href^="#"]')].map(a => [a.hash.slice(1), a]));
 const spy = new IntersectionObserver(entries => entries.forEach(entry => {
   links.get(entry.target.id).classList.toggle('active', entry.isIntersecting);
@@ -58,7 +67,7 @@ links.forEach((_, id) => spy.observe(document.getElementById(id)));
 const LEAF = 'M0 0C12-10 40-10 56 0C40 10 12 10 0 0Z';
 const stem = [[40, 30, 15], [88, 52, 24], [140, 88, 33], [196, 138, 41], [255, 202, 48], [310, 270, 54]];
 const twig = [[165, 66, -8], [212, 64, 3], [256, 74, 14]];
-const leaf = (x, y, angle, i) => `<g transform="translate(${x} ${y}) rotate(${angle})"><path class="leaf" style="--i:${i}" d="${LEAF}"/></g>`;
+const leaf = (x, y, angle, i) => `<g transform="translate(${x} ${y}) rotate(${angle})"><path d="${LEAF}"/></g>`;
 const pairs = (points, start) => points.map(([x, y, a], i) => leaf(x, y, a - 48, start + i * 2) + leaf(x, y, a + 44, start + i * 2 + 1)).join('');
 const branch = `<svg viewBox="0 0 400 400" fill="currentColor"><path d="M-10 20C90 40 200 110 330 300M120 76C170 60 232 60 292 92" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>${pairs(stem, 0)}${leaf(330, 300, 58, 12)}${pairs(twig, 13)}${leaf(292, 92, 24, 19)}</svg>`;
 const TONES = ['#6f7a45', '#8b8f58', '#55633a', '#a39a62', '#7d8a4e'];
@@ -86,7 +95,7 @@ const sprigs = [
   [['rama', 'tl', 1.05, 2, 1, 6.5], ['helecho', 'br', 1.05, 4, 1, 9.5]],
   [['helecho', 'tl', .9, -16, 1, 7.5], ['rama', 'br', .9, 8, 1, 8]]
 ];
-const SPRIG_SIZE = { rama: [520, 403], helecho: [720, 362] };
+const SPRIG_SIZE = { rama: [320, 248], helecho: [480, 241] };
 const root = document.querySelector('link[rel="stylesheet"]').href.replace(/site\.css.*$/, '');
 const sprig = ([kind, corner, scale, turn, mirror, sway]) => `<span class="sprig ${kind} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
 document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => panel.insertAdjacentHTML('beforeend', sprigs[i % sprigs.length].map(sprig).join('')));

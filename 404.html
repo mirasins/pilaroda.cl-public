@@ -7,8 +7,9 @@
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#F2F0EA">
   <link rel="icon" href="/assets/favicon-48.png" type="image/png" sizes="48x48">
+  <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="/site.css">
-  <script src="/site.js" defer></script>
+  <script src="/site.js" defer onerror="document.documentElement.classList.remove('js')"></script>
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
@@ -16,7 +17,7 @@
 
   <header>
     <div class="wrap">
-      <a class="brand" href="/"><img src="/assets/logo-ps-pilar-oda.webp" width="640" height="223" alt="Ps. Pilar Oda, inicio"></a>
+      <a class="brand" href="/"><img src="/assets/logo-ps-pilar-oda.webp" width="400" height="139" fetchpriority="high" alt="Ps. Pilar Oda, inicio"></a>
       <nav aria-label="Principal">
         <ul>
           <li><a href="/">Inicio</a></li>

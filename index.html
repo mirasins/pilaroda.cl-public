@@ -24,9 +24,9 @@
   <link rel="icon" href="assets/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/marcellus-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/fraunces-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" media="(min-width:641px)">
-  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" media="(max-width:640px)">
+  <link rel="preload" href="assets/fondo-olivo.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width:641px)">
+  <link rel="preload" href="assets/fondo-olivo-movil.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width:640px)">
+  <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="site.css">
   <script type="application/ld+json">
   {
@@ -45,7 +45,7 @@
         "@id": "https://pilaroda.cl/#consulta",
         "name": "Psicóloga Pilar Oda",
         "url": "https://pilaroda.cl/",
-        "logo": "https://pilaroda.cl/assets/logo-pilar-oda.webp",
+        "logo": "https://pilaroda.cl/assets/logo-ps-pilar-oda.webp",
         "image": "https://pilaroda.cl/assets/og-image.jpg",
         "email": "oda.pili@gmail.com",
         "telephone": "+56931113691",
@@ -77,7 +77,7 @@
     ]
   }
   </script>
-  <script src="site.js" defer></script>
+  <script src="site.js" defer onerror="document.documentElement.classList.remove('js')"></script>
 </head>
 <body>
   <a class="skip" href="#inicio">Saltar al contenido</a>
@@ -86,7 +86,7 @@
 
   <header>
     <div class="wrap">
-      <a class="brand" href="#inicio"><img src="assets/logo-ps-pilar-oda.webp" width="640" height="223" alt="Ps. Pilar Oda, inicio"></a>
+      <a class="brand" href="#inicio"><img src="assets/logo-ps-pilar-oda.webp" width="400" height="139" fetchpriority="high" alt="Ps. Pilar Oda, inicio"></a>
       <nav aria-label="Principal">
         <ul>
           <li><a href="#como-trabajo">Cómo trabajo</a></li>
@@ -144,7 +144,7 @@
     <section id="quien-soy" class="alt">
       <div class="wrap">
         <div class="about-head">
-          <img src="assets/pilar-oda-retrato.webp" width="900" height="900" loading="lazy" alt="Retrato de Pilar Oda Moreno, psicóloga clínica">
+          <img src="assets/pilar-oda-retrato-256.webp" width="256" height="256" loading="lazy" decoding="async" alt="Retrato de Pilar Oda Moreno, psicóloga clínica">
           <h2>Quién soy</h2>
         </div>
         <div class="about-grid">
@@ -235,7 +235,7 @@
 
   <footer>
     <div class="wrap">
-      <a class="footer-logo" href="#inicio"><img src="assets/logo-ps-pilar-oda.webp" width="640" height="223" loading="lazy" alt="Ps. Pilar Oda"></a>
+      <a class="footer-logo" href="#inicio"><img src="assets/logo-ps-pilar-oda.webp" width="400" height="139" loading="lazy" alt="Ps. Pilar Oda"></a>
       <span>© <span id="y">2026</span> Pilar Oda Moreno. Todos los derechos reservados.</span>
       <ul>
         <li><a href="sobre-mi.html">Sobre mí</a></li>
