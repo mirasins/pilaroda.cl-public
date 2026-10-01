@@ -59,7 +59,8 @@ nav a.active,nav a[aria-current] { color:var(--accent-dark) }
 .hero>div { position:relative;z-index:2;padding:4rem 1.25rem }
 .hero h1 { font-size:clamp(2.6rem,7vw,4.5rem);letter-spacing:-.015em }
 .hero .role { font-size:clamp(1.2rem,2.5vw,1.6rem);margin:.5rem 0 1.5rem }
-.hero .tag { font-size:1.15rem;margin:0 0 2rem }
+.hero .tag { font-size:clamp(1.35rem,3vw,1.8rem);letter-spacing:.01em;margin:0 0 2rem }
+.hero .tag em { font-size:1.18em;font-weight:500;color:var(--accent-dark) }
 .hero>div>* { animation:rise 1.3s var(--ease) both }
 .hero .role { animation-delay:.18s }
 .hero .tag { animation-delay:.36s }
