@@ -273,3 +273,5 @@ form .btn+.small { margin:.9rem 0 0 }
 .fold.extra .items h3 { font-size:1.3rem;margin-bottom:.4rem }
 .fold.extra .items .meta { margin-bottom:.8rem }
 .extra-cta { margin-top:1rem;padding-top:1.5rem;border-top:1px solid var(--line) }
+.fold.extra .items { counter-reset:extra }
+.fold.extra .items article::before { counter-increment:extra;content:"0" counter(extra);display:block;margin-bottom:.4rem;font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.17em;color:var(--accent-dark) }
