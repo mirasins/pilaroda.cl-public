@@ -240,3 +240,5 @@ form .btn+.small { margin:.9rem 0 0 }
 .h3::after { display:none }
 .items .h3 { font-size:1.3rem;margin-bottom:.7rem }
 .small+.small { margin-top:.5rem }
+.modality .h3 { margin-bottom:1rem }
+.modality .h3+p { margin-bottom:1.5rem }
