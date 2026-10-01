@@ -122,7 +122,14 @@ html:not(.js) :is(.jarron,.sombras,#servicios,.cta)::before,:is(.jarron,.sombras
 details::details-content { block-size:0;opacity:0;overflow:hidden;transition:block-size .6s var(--ease),opacity .6s var(--ease),content-visibility .6s allow-discrete }
 details[open]::details-content { block-size:auto;opacity:1 }
 .card .btn { margin-top:1rem;text-align:center }
-.services-more { text-align:center;margin-top:2.5rem }
+.services-more { display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;margin-top:2.5rem }
+.services-more .more:not(.extra-link) { grid-column:2 }
+.extra-link { grid-row:1;justify-self:start;font-size:.8rem }
+@media(max-width:640px) {
+  .services-more { grid-template-columns:1fr;justify-items:center }
+  .services-more .more:not(.extra-link) { grid-column:1 }
+  .extra-link { grid-row:2 }
+}
 
 .cta { text-align:center }
 html:not(.js) .cta::before,.cta.seen::before { background:linear-gradient(rgba(242,240,234,.25),rgba(242,240,234,.25)),url('assets/fondo-follaje.webp') center/cover no-repeat }
