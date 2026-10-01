@@ -265,8 +265,8 @@ form .btn+.small { margin:.9rem 0 0 }
 .modality .h3 { margin-bottom:1rem }
 .modality .h3+p { margin-bottom:1.5rem }
 .fold.extra,.fold.extra:last-of-type { border:0 }
-.fold.extra summary { align-items:center;padding:0 }
-.fold.extra summary .h3 { font-size:clamp(1.5rem,3vw,2rem) }
+.fold.extra summary { flex-direction:column;align-items:center;gap:.6rem;padding:0;text-align:center }
+.fold.extra summary .h3 { font-size:clamp(1.9rem,4.2vw,3rem) }
 .fold.extra summary span::after { content:"+";display:inline-block;margin-left:.6rem;font-size:1.3rem;line-height:1;vertical-align:-.1em;transition:transform .5s var(--ease) }
 .fold.extra[open] summary span::after { transform:rotate(45deg) }
 .fold.extra .items { margin-top:2rem }
