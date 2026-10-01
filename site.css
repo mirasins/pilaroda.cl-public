@@ -131,6 +131,13 @@ details[open]::details-content { block-size:auto;opacity:1 }
   .extra-link { grid-row:2 }
 }
 
+.testimonial { position:relative;margin-top:.5rem;padding-left:clamp(1.25rem,4vw,2.25rem);border-left:2px solid var(--accent) }
+.testimonial::before { content:"“";position:absolute;top:-1.6rem;left:clamp(1rem,3.5vw,2rem);font-family:var(--title);font-size:4.5rem;line-height:1;color:var(--accent);opacity:.35 }
+.testimonial blockquote { padding-top:1.4rem }
+.testimonial figcaption { margin-top:1.5rem;font-family:var(--sans);font-size:.9rem;font-weight:500;letter-spacing:.04em;color:var(--accent-dark) }
+.testimonial figcaption::before { content:"— " }
+.testimonial+.testimonial { margin-top:3rem }
+
 .cta { text-align:center }
 html:not(.js) .cta::before,.cta.seen::before { background:linear-gradient(rgba(242,240,234,.25),rgba(242,240,234,.25)),url('assets/fondo-follaje.webp') center/cover no-repeat }
 .cta p { margin:0 auto 2rem;max-width:560px }
