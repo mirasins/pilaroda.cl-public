@@ -101,7 +101,65 @@ const root = document.querySelector('link[rel="stylesheet"]').href.replace(/site
 // El bloque de testimonios va rodeado: las cuatro esquinas y los costados
 const wreath = [['helecho', 'tl', 1, -10, 1, 8], ['olivo-a', 'tr', .9, 6, 1, 7], ['olivo-b', 'bl', .9, -6, 1, 7.5], ['helecho', 'br', .95, 5, 1, 9], ['rama', 'ml', .8, 6, 1, 8.5, 38], ['rama', 'mr', .85, -6, -1, 7, 58]];
 const sprig = ([kind, corner, scale, turn, mirror, sway, y = 45]) => `<span class="sprig ${kind.split('-')[0]} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s;--y:${y}%;--by:${SPRIG_BASE[kind] || 58}%"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
-document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => panel.insertAdjacentHTML('beforeend', (panel.closest('#testimonios') ? wreath : sprigs[i % sprigs.length]).map(sprig).join('')));
+// Enredaderas: en algunos cuadros una guía de hojas recorre parte del borde (por fuera) y crece al aparecer
+// Recorridos en fracciones del ancho/alto del cuadro: [x, y] de esquina a esquina
+const VINES = {
+  0: [[0, .92], [0, 0], [.68, 0]],
+  'como-trabajo': [[1, .08], [1, 1], [.3, 1]],
+  'testimonios': [[.42, 0], [0, 0], [0, .62]],
+  'contacto': [[.5, 1], [1, 1], [1, .2]]
+};
+const leafPath = l => { const w = l * .62; return `M0 0C${l * .12} ${-w * .9} ${l * .62} ${-w * 1.05} ${l} ${-w * .08}C${l * .7} ${w * .62} ${l * .2} ${w * .78} 0 0Z`; };
+const drawVine = (panel, route) => {
+  const W = panel.offsetWidth, H = panel.offsetHeight, pad = 40, off = -9;
+  const pts = route.map(([x, y]) => [x * W, y * H]);
+  const segs = []; let total = 0;
+  for (let k = 1; k < pts.length; k++) { const [x0, y0] = pts[k - 1], [x1, y1] = pts[k], len = Math.hypot(x1 - x0, y1 - y0); segs.push([x0, y0, (x1 - x0) / len, (y1 - y0) / len, len, total]); total += len; }
+  const cx = (pts[0][0] + pts[pts.length - 1][0]) / 2 < W / 2 ? 1 : -1;
+  const at = d => {
+    const sg = segs.find(s => d <= s[5] + s[4]) || segs[segs.length - 1];
+    const u = d - sg[5];
+    let nx = -sg[3], ny = sg[2];
+    // la normal apunta hacia afuera del cuadro
+    const mx = sg[0] + sg[2] * u, my = sg[1] + sg[3] * u;
+    if ((mx + nx * 10 > 0 && mx + nx * 10 < W && my + ny * 10 > 0 && my + ny * 10 < H)) { nx = -nx; ny = -ny; }
+    const wave = off - 5 - 5 * Math.sin(d / 46);
+    return [mx + nx * wave * -1 + pad, my + ny * wave * -1 + pad, Math.atan2(sg[3], sg[2]) * 180 / Math.PI, nx, ny];
+  };
+  let stem = '', leaves = '', curls = '';
+  for (let d = 0; d <= total; d += 6) { const [x, y] = at(d); stem += (d ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
+  let side = 1, n = 0;
+  for (let d = 18; d < total - 8; d += 30 + (n * 7) % 16, n++) {
+    const [x, y, a, nx, ny] = at(d), t = d / total;
+    side = -side;
+    const l = 15 + ((n * 37) % 11) + 6 * Math.sin(t * Math.PI);
+    const ang = a + side * (48 + (n * 13) % 24);
+    const fill = ['url(#vine-a)', 'url(#vine-b)', 'url(#vine-c)'][n % 3];
+    leaves += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><path class="leaf" style="--t:${t.toFixed(3)}" fill="${fill}" d="${leafPath(l)}"/></g>`;
+    if (n % 6 === 3) {
+      const r = 5 + (n % 3);
+      curls += `<path class="curl" style="--t:${t.toFixed(3)}" d="M${x.toFixed(1)} ${y.toFixed(1)}q${(nx * 10).toFixed(1)} ${(ny * 10).toFixed(1)} ${(nx * 14 + r).toFixed(1)} ${(ny * 14).toFixed(1)}a${r} ${r} 0 1 1 ${(-r).toFixed(1)} ${(r * .6).toFixed(1)}a${r * .5} ${r * .5} 0 1 1 ${(r * .5).toFixed(1)} ${(-r * .4).toFixed(1)}"/>`;
+    }
+  }
+  const svg = `<svg class="vine" aria-hidden="true" width="${W + pad * 2}" height="${H + pad * 2}" viewBox="0 0 ${W + pad * 2} ${H + pad * 2}"><defs>
+<linearGradient id="vine-bark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b5f3e"/><stop offset="1" stop-color="#8d8160"/></linearGradient>
+<linearGradient id="vine-a" x1="0" y1="-1" x2="0" y2="1"><stop offset="0" stop-color="#7f8c50"/><stop offset=".55" stop-color="#55623a"/><stop offset="1" stop-color="#3c4628"/></linearGradient>
+<linearGradient id="vine-b" x1="0" y1="-1" x2="0" y2="1"><stop offset="0" stop-color="#99a066"/><stop offset=".6" stop-color="#6b7646"/><stop offset="1" stop-color="#4c5732"/></linearGradient>
+<linearGradient id="vine-c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9bf9c"/><stop offset=".6" stop-color="#8c967a"/><stop offset="1" stop-color="#707a5c"/></linearGradient>
+</defs><path class="stem" pathLength="1" d="${stem}"/>${curls}${leaves}</svg>`;
+  panel.querySelector('.vine')?.remove();
+  panel.insertAdjacentHTML('beforeend', svg);
+};
+const vinePanels = [];
+document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => {
+  const route = document.querySelector('main#inicio') && (VINES[panel.parentElement.id] || (!panel.parentElement.id && VINES[i]));
+  if (route) { vinePanels.push([panel, route]); drawVine(panel, route); }
+  const decor = panel.closest('#testimonios') ? wreath : sprigs[i % sprigs.length];
+  panel.insertAdjacentHTML('beforeend', (route ? decor.filter(([kind, corner]) => !route.some(([x, y]) => (corner.includes('t') && y === 0 && corner.includes(x < .5 ? 'l' : 'r')) || (corner.includes('b') && y === 1 && corner.includes(x < .5 ? 'l' : 'r')) || (corner === 'ml' && x === 0) || (corner === 'mr' && x === 1))) : decor).map(sprig).join(''));
+});
+let vineTimer = 0;
+window.addEventListener('resize', () => { clearTimeout(vineTimer); vineTimer = setTimeout(() => vinePanels.forEach(([panel, route]) => drawVine(panel, route)), 200); }, { passive: true });
+document.fonts && document.fonts.ready.then(() => vinePanels.forEach(([panel, route]) => drawVine(panel, route)));
 
 // Enlace directo a un bloque desplegable (p. ej. servicios.html#adicionales): se abre al llegar
 const linked = window.location.hash && document.getElementById(window.location.hash.slice(1));

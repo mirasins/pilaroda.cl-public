@@ -254,11 +254,20 @@ form .btn+.small { margin:.9rem 0 0 }
 .sprig.ml { right:calc(100% - 26px);top:var(--y,45%);transform-origin:50% 50%;transform:rotate(calc(-90deg + var(--r,0deg))) scaleX(var(--m,1)) }
 .sprig.mr { left:calc(100% - 26px);top:var(--y,45%);transform-origin:50% 50%;transform:rotate(calc(90deg + var(--r,0deg))) scaleX(var(--m,1)) }
 .sprig.olivo { --o:0 var(--by);width:calc(clamp(150px,22vw,290px) * var(--k,1)) }
-.sprig.tl.olivo { left:-16px;bottom:100%;transform:translateY(calc(104% - var(--by))) rotate(var(--r,0deg)) }
-.sprig.tr.olivo { right:-16px;bottom:100%;transform-origin:50% 50%;transform:translateY(calc(104% - var(--by))) scaleX(-1) rotate(var(--r,0deg)) }
-.sprig.br.olivo { right:-16px;top:100%;transform-origin:50% 50%;transform:translateY(calc(var(--by) - 104%)) rotate(calc(180deg + var(--r,0deg))) }
-.sprig.bl.olivo { left:-16px;top:100%;transform-origin:50% 50%;transform:translateY(calc(var(--by) - 104%)) scaleY(-1) rotate(var(--r,0deg)) }
+.sprig.olivo.tl,.sprig.olivo.tr,.sprig.olivo.br,.sprig.olivo.bl { transform-origin:0 var(--by) }
+.sprig.tl.olivo { left:4px;top:4px;transform:translateY(calc(-1 * var(--by))) rotate(calc(-142deg + var(--r,0deg))) scaleY(-1) }
+.sprig.tr.olivo { left:calc(100% - 4px);top:4px;transform:translateY(calc(-1 * var(--by))) rotate(calc(-38deg + var(--r,0deg))) }
+.sprig.br.olivo { left:calc(100% - 4px);top:calc(100% - 4px);transform:translateY(calc(-1 * var(--by))) rotate(calc(38deg + var(--r,0deg))) }
+.sprig.bl.olivo { left:4px;top:calc(100% - 4px);transform:translateY(calc(-1 * var(--by))) rotate(calc(142deg + var(--r,0deg))) scaleY(-1) }
 .sprig.br { --wait:.9s }
+/* Enredadera dibujada alrededor de algunos cuadros */
+.vine { position:absolute;left:-40px;top:-40px;z-index:1;overflow:visible;pointer-events:none }
+.vine .stem { fill:none;stroke:url(#vine-bark);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 3.4s var(--ease) .3s }
+.vine .curl { fill:none;stroke:#7a6c47;stroke-width:1.2;stroke-linecap:round;transition:opacity 1s var(--ease) calc(.6s + var(--t) * 3.2s) }
+.vine .leaf { transform-box:fill-box;transform-origin:0 50%;transition:transform 1.3s var(--ease) calc(.5s + var(--t) * 3.2s) }
+.js [data-reveal="panel"]:not(.in) .vine .stem { stroke-dashoffset:1 }
+.js [data-reveal="panel"]:not(.in) .vine .leaf { transform:scale(0) }
+.js [data-reveal="panel"]:not(.in) .vine .curl { opacity:0 }
 .sprig.tr { --wait:.65s }
 .sprig.bl { --wait:1.15s }
 .sprig.ml,.sprig.mr { --wait:1.4s }
