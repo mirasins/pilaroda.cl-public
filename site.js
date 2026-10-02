@@ -103,3 +103,50 @@ document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) 
 // Enlace directo a un bloque desplegable (p. ej. servicios.html#adicionales): se abre al llegar
 const linked = window.location.hash && document.getElementById(window.location.hash.slice(1));
 if (linked && linked.matches('details')) { linked.open = true; linked.closest('section').scrollIntoView(); }
+
+// Carrusel de testimonios: uno a la vez, con flechas, puntos, deslizamiento táctil y avance automático según el largo del texto
+document.querySelectorAll('.carousel').forEach(carousel => {
+  const slides = [...carousel.children];
+  if (slides.length < 2) { slides.forEach(slide => slide.classList.add('current')); return; }
+  const nav = document.createElement('div');
+  nav.className = 'carousel-nav';
+  nav.innerHTML = `<button class="step" type="button" aria-label="Testimonio anterior">←</button><span class="carousel-dots">${slides.map((_, i) => `<button type="button" aria-label="Ver testimonio ${i + 1} de ${slides.length}"></button>`).join('')}</span><button class="step" type="button" aria-label="Testimonio siguiente">→</button>`;
+  carousel.after(nav);
+  const [prev, next] = nav.querySelectorAll('.step');
+  const dots = [...nav.querySelectorAll('.carousel-dots button')];
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current = 0, timer = 0, hold = false;
+  const queue = () => {
+    clearTimeout(timer);
+    if (still || hold) return;
+    const words = slides[current].textContent.trim().split(/\s+/).length;
+    timer = setTimeout(() => show(current + 1), 6000 + words * 330);
+  };
+  const show = index => {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('current', i === current);
+      slide.classList.toggle('past', i < current);
+      slide.setAttribute('aria-hidden', i !== current);
+    });
+    dots.forEach((dot, i) => dot.setAttribute('aria-current', i === current));
+    queue();
+  };
+  prev.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+  const pause = on => { hold = on; queue(); };
+  [carousel, nav].forEach(el => {
+    el.addEventListener('pointerenter', () => pause(true));
+    el.addEventListener('pointerleave', () => pause(false));
+    el.addEventListener('focusin', () => pause(true));
+    el.addEventListener('focusout', () => pause(false));
+  });
+  let startX = 0;
+  carousel.addEventListener('touchstart', event => { startX = event.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', event => {
+    const dx = event.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 48) show(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+  show(0);
+});

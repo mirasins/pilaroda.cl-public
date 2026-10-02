@@ -135,6 +135,18 @@ details[open]::details-content { block-size:auto;opacity:1 }
 .testimonial figcaption { font-family:var(--title);font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;color:var(--accent-dark) }
 .testimonial blockquote { margin-top:1rem }
 .testimonial+.testimonial { margin-top:3rem }
+.js .carousel { display:grid }
+.js .carousel>.testimonial { grid-area:1/1;margin-top:.5rem;opacity:0;visibility:hidden;transform:translateX(32px);transition:opacity .9s var(--ease),transform .9s var(--ease),visibility .9s }
+.js .carousel>.testimonial.past { transform:translateX(-32px) }
+.js .carousel>.testimonial.current { opacity:1;visibility:visible;transform:none }
+.carousel-nav { display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1.75rem }
+.carousel-nav button { display:grid;place-items:center;padding:0;border:0;background:none;color:var(--accent-dark);cursor:pointer }
+.carousel-nav .step { width:44px;height:44px;border:1px solid rgba(78,115,112,.45);border-radius:50%;font:1.1rem/1 var(--sans);transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease) }
+.carousel-nav .step:hover { background:var(--accent);color:var(--bg);transform:translateY(-2px) }
+.carousel-dots { display:flex }
+.carousel-dots button { width:26px;height:26px }
+.carousel-dots button::before { content:"";width:9px;height:9px;border:1px solid var(--accent);border-radius:50%;transition:background .4s var(--ease),transform .4s var(--ease) }
+.carousel-dots button[aria-current="true"]::before { background:var(--accent);transform:scale(1.25) }
 
 .cta { text-align:center }
 html:not(.js) .cta::before,.cta.seen::before { background:linear-gradient(rgba(242,240,234,.25),rgba(242,240,234,.25)),url('assets/fondo-follaje.webp') center/cover no-repeat }
