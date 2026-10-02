@@ -133,6 +133,7 @@ details[open]::details-content { block-size:auto;opacity:1 }
 
 .testimonial { margin-top:.5rem;padding-left:clamp(1.25rem,4vw,2.25rem);border-left:2px solid var(--accent) }
 .testimonial figcaption { font-family:var(--title);font-size:clamp(1.3rem,2.6vw,1.6rem);line-height:1.25;color:var(--accent-dark) }
+.testimonial figcaption span { display:block;margin-top:.35rem;font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted) }
 .testimonial blockquote { margin-top:1rem }
 .testimonial+.testimonial { margin-top:3rem }
 .js .carousel { display:grid }
