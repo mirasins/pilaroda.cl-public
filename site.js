@@ -88,18 +88,19 @@ document.body.append(leaves);
 // Hojas en las esquinas: cada bloque recibe una combinación distinta que brota al entrar en pantalla
 // [tipo, esquina, escala, giro °, espejo, vaivén s]
 const sprigs = [
-  [['rama', 'tl', 1, -8, 1, 7], ['helecho', 'br', .9, 6, 1, 9]],
-  [['helecho', 'tl', 1, -12, 1, 8], ['rama', 'br', .8, 10, -1, 6.5]],
-  [['rama', 'tl', .85, 12, -1, 8.5], ['rama', 'br', 1, -6, 1, 7.5]],
-  [['helecho', 'tl', 1.1, -5, 1, 10], ['helecho', 'br', .8, -8, 1, 8]],
-  [['rama', 'tl', 1.05, 2, 1, 6.5], ['helecho', 'br', 1.05, 4, 1, 9.5]],
-  [['helecho', 'tl', .9, -16, 1, 7.5], ['rama', 'br', .9, 8, 1, 8]]
+  [['olivo-a', 'tl', 1, -8, 1, 7], ['helecho', 'br', .9, 6, 1, 9]],
+  [['helecho', 'tl', 1, -12, 1, 8], ['olivo-b', 'br', .95, 8, 1, 6.5]],
+  [['rama', 'tl', .85, 12, -1, 8.5], ['olivo-a', 'br', 1, -6, 1, 7.5]],
+  [['olivo-b', 'tl', 1.05, -5, 1, 10], ['helecho', 'br', .8, -8, 1, 8]],
+  [['rama', 'tl', 1.05, 2, 1, 6.5], ['olivo-b', 'br', 1, 4, 1, 9.5]],
+  [['olivo-a', 'tl', .95, -14, 1, 7.5], ['rama', 'br', .9, 8, 1, 8]]
 ];
-const SPRIG_SIZE = { rama: [320, 248], helecho: [480, 241] };
+const SPRIG_BASE = { 'olivo-a': 82, 'olivo-b': 70 };
+const SPRIG_SIZE = { 'olivo-a': [480, 140], 'olivo-b': [480, 149], rama: [320, 248], helecho: [480, 241] };
 const root = document.querySelector('link[rel="stylesheet"]').href.replace(/site\.css.*$/, '');
 // El bloque de testimonios va rodeado: las cuatro esquinas y los costados
-const wreath = [['helecho', 'tl', 1, -10, 1, 8], ['rama', 'tr', .95, 10, -1, 7], ['rama', 'bl', .9, -8, -1, 7.5], ['helecho', 'br', .95, 5, 1, 9], ['rama', 'ml', .8, 6, 1, 8.5, 38], ['rama', 'mr', .85, -6, -1, 7, 58]];
-const sprig = ([kind, corner, scale, turn, mirror, sway, y = 45]) => `<span class="sprig ${kind} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s;--y:${y}%"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
+const wreath = [['helecho', 'tl', 1, -10, 1, 8], ['olivo-a', 'tr', .9, 6, 1, 7], ['olivo-b', 'bl', .9, -6, 1, 7.5], ['helecho', 'br', .95, 5, 1, 9], ['rama', 'ml', .8, 6, 1, 8.5, 38], ['rama', 'mr', .85, -6, -1, 7, 58]];
+const sprig = ([kind, corner, scale, turn, mirror, sway, y = 45]) => `<span class="sprig ${kind.split('-')[0]} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s;--y:${y}%;--by:${SPRIG_BASE[kind] || 58}%"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
 document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => panel.insertAdjacentHTML('beforeend', (panel.closest('#testimonios') ? wreath : sprigs[i % sprigs.length]).map(sprig).join('')));
 
 // Enlace directo a un bloque desplegable (p. ej. servicios.html#adicionales): se abre al llegar
