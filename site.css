@@ -136,7 +136,7 @@ details[open]::details-content { block-size:auto;opacity:1 }
 .testimonial figcaption span { display:block;margin-top:.35rem;font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted) }
 .testimonial blockquote { margin-top:1rem }
 .testimonial+.testimonial { margin-top:3rem }
-.js .carousel { display:grid }
+.js .carousel { display:grid;align-items:start;overflow:hidden;transition:height .8s var(--ease) }
 .js .carousel>.testimonial { grid-area:1/1;margin-top:.5rem;opacity:0;visibility:hidden;transform:translateX(32px);transition:opacity .9s var(--ease),transform .9s var(--ease),visibility .9s }
 .js .carousel>.testimonial.past { transform:translateX(-32px) }
 .js .carousel>.testimonial.current { opacity:1;visibility:visible;transform:none }

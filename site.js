@@ -132,8 +132,13 @@ document.querySelectorAll('.carousel').forEach(carousel => {
       slide.setAttribute('aria-hidden', i !== current);
     });
     dots.forEach((dot, i) => dot.setAttribute('aria-current', i === current));
+    fit();
     queue();
   };
+  // El alto del carrusel sigue al testimonio visible, así los textos cortos no dejan un hueco
+  const fit = () => { carousel.style.height = slides[current].offsetHeight + 'px'; };
+  window.addEventListener('resize', fit, { passive: true });
+  document.fonts && document.fonts.ready.then(fit);
   prev.addEventListener('click', () => show(current - 1));
   next.addEventListener('click', () => show(current + 1));
   dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
