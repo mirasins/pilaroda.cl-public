@@ -97,8 +97,10 @@ const sprigs = [
 ];
 const SPRIG_SIZE = { rama: [320, 248], helecho: [480, 241] };
 const root = document.querySelector('link[rel="stylesheet"]').href.replace(/site\.css.*$/, '');
-const sprig = ([kind, corner, scale, turn, mirror, sway]) => `<span class="sprig ${kind} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
-document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => panel.insertAdjacentHTML('beforeend', sprigs[i % sprigs.length].map(sprig).join('')));
+// El bloque de testimonios va rodeado: las cuatro esquinas y los costados
+const wreath = [['helecho', 'tl', 1, -10, 1, 8], ['rama', 'tr', .95, 10, -1, 7], ['rama', 'bl', .9, -8, -1, 7.5], ['helecho', 'br', .95, 5, 1, 9], ['rama', 'ml', .8, 6, 1, 8.5, 38], ['rama', 'mr', .85, -6, -1, 7, 58]];
+const sprig = ([kind, corner, scale, turn, mirror, sway, y = 45]) => `<span class="sprig ${kind} ${corner}" aria-hidden="true" style="--k:${scale};--r:${turn}deg;--m:${mirror};--sway:${sway}s;--y:${y}%"><span><img src="${root}assets/hojas-${kind}.webp" width="${SPRIG_SIZE[kind][0]}" height="${SPRIG_SIZE[kind][1]}" alt="" loading="lazy" decoding="async"></span></span>`;
+document.querySelectorAll('main section:not(.hero) > .wrap').forEach((panel, i) => panel.insertAdjacentHTML('beforeend', (panel.closest('#testimonios') ? wreath : sprigs[i % sprigs.length]).map(sprig).join('')));
 
 // Enlace directo a un bloque desplegable (p. ej. servicios.html#adicionales): se abre al llegar
 const linked = window.location.hash && document.getElementById(window.location.hash.slice(1));

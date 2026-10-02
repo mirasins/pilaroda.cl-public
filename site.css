@@ -246,7 +246,17 @@ form .btn+.small { margin:.9rem 0 0 }
 .sprig.br.rama { right:-22px;top:calc(100% - 20px);transform-origin:50% 50%;transform:rotate(calc(180deg + var(--r,0deg))) scaleX(var(--m,1)) }
 .sprig.tl.helecho { left:-16px;bottom:100%;transform:translateY(34%) rotate(var(--r,0deg)) }
 .sprig.br.helecho { right:-16px;top:100%;transform-origin:50% 50%;transform:translateY(-34%) rotate(calc(180deg + var(--r,0deg))) }
+.sprig.tr.rama { right:-22px;bottom:calc(100% - 20px);transform:rotate(var(--r,0deg)) scaleX(var(--m,1)) }
+.sprig.bl.rama { left:-22px;top:calc(100% - 20px);transform-origin:50% 50%;transform:rotate(calc(180deg + var(--r,0deg))) scaleX(var(--m,1)) }
+.sprig.tr.helecho { right:-16px;bottom:100%;transform-origin:50% 50%;transform:translateY(34%) scaleX(-1) rotate(var(--r,0deg)) }
+.sprig.bl.helecho { left:-16px;top:100%;transform-origin:50% 50%;transform:translateY(-34%) scaleY(-1) rotate(var(--r,0deg)) }
+.sprig.ml { right:calc(100% - 26px);top:var(--y,45%);transform-origin:50% 50%;transform:rotate(calc(-90deg + var(--r,0deg))) scaleX(var(--m,1)) }
+.sprig.mr { left:calc(100% - 26px);top:var(--y,45%);transform-origin:50% 50%;transform:rotate(calc(90deg + var(--r,0deg))) scaleX(var(--m,1)) }
 .sprig.br { --wait:.9s }
+.sprig.tr { --wait:.65s }
+.sprig.bl { --wait:1.15s }
+.sprig.ml,.sprig.mr { --wait:1.4s }
+@media(max-width:900px) { .sprig.ml,.sprig.mr { display:none } }
 .js [data-reveal="panel"]:not(.in) .sprig>span { opacity:0;transform:scale(.15) rotate(-24deg) }
 @keyframes sprig-sway { from { transform:rotate(-1.6deg) } to { transform:rotate(2.2deg) } }
 
