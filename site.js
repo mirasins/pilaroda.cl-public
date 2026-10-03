@@ -95,8 +95,8 @@ const sprigs = [
   [['rama', 'tl', 1.05, 2, 1, 6.5], ['olivo-b', 'br', 1, 4, 1, 9.5]],
   [['olivo-a', 'tl', .95, -14, 1, 7.5], ['rama', 'br', .9, 8, 1, 8]]
 ];
-const SPRIG_BASE = { 'olivo-a': 82, 'olivo-b': 70 };
-const SPRIG_SIZE = { 'olivo-a': [480, 140], 'olivo-b': [480, 149], rama: [320, 248], helecho: [480, 241] };
+const SPRIG_BASE = { 'olivo-a': 53, 'olivo-b': 47 };
+const SPRIG_SIZE = { 'olivo-a': [360, 137], 'olivo-b': [360, 119], rama: [320, 248], helecho: [480, 241] };
 const root = document.querySelector('link[rel="stylesheet"]').href.replace(/site\.css.*$/, '');
 // El bloque de testimonios va rodeado: las cuatro esquinas y los costados
 const wreath = [['helecho', 'tl', 1, -10, 1, 8], ['olivo-a', 'tr', .9, 6, 1, 7], ['olivo-b', 'bl', .9, -6, 1, 7.5], ['helecho', 'br', .95, 5, 1, 9], ['rama', 'ml', .8, 6, 1, 8.5, 38], ['rama', 'mr', .85, -6, -1, 7, 58]];
@@ -109,44 +109,62 @@ const VINES = {
   'testimonios': [[.42, 0], [0, 0], [0, .62]],
   'contacto': [[.5, 1], [1, 1], [1, .2]]
 };
-const leafPath = l => { const w = l * .62; return `M0 0C${l * .12} ${-w * .9} ${l * .62} ${-w * 1.05} ${l} ${-w * .08}C${l * .7} ${w * .62} ${l * .2} ${w * .78} 0 0Z`; };
+// Hoja de hiedra: base acorazonada, tres lóbulos suaves y punta; apunta hacia +x desde el pecíolo
+const ivy = (l, k) => {
+  const w = l * (.78 + k * .1), q = v => v.toFixed(1);
+  return `M0 0C${q(-l * .08)} ${q(-w * .28)} ${q(l * .06)} ${q(-w * .56)} ${q(l * .3)} ${q(-w * .54)}C${q(l * .42)} ${q(-w * .53)} ${q(l * .46)} ${q(-w * .36)} ${q(l * .55)} ${q(-w * .32)}C${q(l * .72)} ${q(-w * .3)} ${q(l * .9)} ${q(-w * .14)} ${q(l)} 0C${q(l * .9)} ${q(w * .15)} ${q(l * .72)} ${q(w * .31)} ${q(l * .55)} ${q(w * .33)}C${q(l * .46)} ${q(w * .37)} ${q(l * .42)} ${q(w * .54)} ${q(l * .3)} ${q(w * .55)}C${q(l * .06)} ${q(w * .57)} ${q(-l * .08)} ${q(w * .3)} 0 0Z`;
+};
+const ivyVeins = (l, k) => {
+  const w = l * (.78 + k * .1), q = v => v.toFixed(1);
+  return `M${q(l * .02)} 0L${q(l * .9)} 0M${q(l * .06)} 0Q${q(l * .2)} ${q(-w * .2)} ${q(l * .32)} ${q(-w * .44)}M${q(l * .06)} 0Q${q(l * .2)} ${q(w * .2)} ${q(l * .32)} ${q(w * .45)}M${q(l * .3)} 0Q${q(l * .44)} ${q(-w * .12)} ${q(l * .55)} ${q(-w * .26)}M${q(l * .3)} 0Q${q(l * .44)} ${q(w * .12)} ${q(l * .55)} ${q(w * .27)}`;
+};
 const drawVine = (panel, route) => {
-  const W = panel.offsetWidth, H = panel.offsetHeight, pad = 40, off = -9;
+  const W = panel.offsetWidth, H = panel.offsetHeight, pad = 46;
   const pts = route.map(([x, y]) => [x * W, y * H]);
   const segs = []; let total = 0;
   for (let k = 1; k < pts.length; k++) { const [x0, y0] = pts[k - 1], [x1, y1] = pts[k], len = Math.hypot(x1 - x0, y1 - y0); segs.push([x0, y0, (x1 - x0) / len, (y1 - y0) / len, len, total]); total += len; }
-  const cx = (pts[0][0] + pts[pts.length - 1][0]) / 2 < W / 2 ? 1 : -1;
-  const at = d => {
+  // punto a distancia d del recorrido, desplazado hacia afuera del cuadro con una ondulación
+  const at = (d, phase = 0, amp = 5) => {
     const sg = segs.find(s => d <= s[5] + s[4]) || segs[segs.length - 1];
     const u = d - sg[5];
     let nx = -sg[3], ny = sg[2];
-    // la normal apunta hacia afuera del cuadro
     const mx = sg[0] + sg[2] * u, my = sg[1] + sg[3] * u;
-    if ((mx + nx * 10 > 0 && mx + nx * 10 < W && my + ny * 10 > 0 && my + ny * 10 < H)) { nx = -nx; ny = -ny; }
-    const wave = off - 5 - 5 * Math.sin(d / 46);
-    return [mx + nx * wave * -1 + pad, my + ny * wave * -1 + pad, Math.atan2(sg[3], sg[2]) * 180 / Math.PI, nx, ny];
+    if (mx + nx * 10 > 0 && mx + nx * 10 < W && my + ny * 10 > 0 && my + ny * 10 < H) { nx = -nx; ny = -ny; }
+    const o = 12 + amp * Math.sin(d / 52 + phase) + 3 * Math.sin(d / 17 + phase * 2);
+    return [mx + nx * o + pad, my + ny * o + pad, Math.atan2(sg[3], sg[2]) * 180 / Math.PI, nx, ny];
   };
-  let stem = '', leaves = '', curls = '';
-  for (let d = 0; d <= total; d += 6) { const [x, y] = at(d); stem += (d ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }
-  let side = 1, n = 0;
-  for (let d = 18; d < total - 8; d += 30 + (n * 7) % 16, n++) {
+  const line = (phase, amp, from = 0, to = total) => { let s = ''; for (let d = from; d <= to; d += 5) { const [x, y] = at(d, phase, amp); s += (s ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); } return s; };
+  // el tallo se adelgaza: tres tramos de grosor decreciente
+  const third = total / 3;
+  const stems = [[0, third + 6, 3.4], [third, 2 * third + 6, 2.5], [2 * third, total, 1.6]]
+    .map(([f, t, w], k) => `<path class="stem" pathLength="1" style="--w:${w};--k:${k}" d="${line(0, 5, f, t)}"/>`).join('');
+  const twin = `<path class="stem twin" pathLength="1" style="--w:1.1;--k:.5" d="${line(2.1, 7, total * .08, total * .7)}"/>`;
+  let leaves = '', curls = '', n = 0, side = 1;
+  for (let d = 16; d < total - 6; d += 26 + (n * 11) % 16, n++) {
     const [x, y, a, nx, ny] = at(d), t = d / total;
     side = -side;
-    const l = 15 + ((n * 37) % 11) + 6 * Math.sin(t * Math.PI);
-    const ang = a + side * (48 + (n * 13) % 24);
-    const fill = ['url(#vine-a)', 'url(#vine-b)', 'url(#vine-c)'][n % 3];
-    leaves += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><path class="leaf" style="--t:${t.toFixed(3)}" fill="${fill}" d="${leafPath(l)}"/></g>`;
-    if (n % 6 === 3) {
-      const r = 5 + (n % 3);
-      curls += `<path class="curl" style="--t:${t.toFixed(3)}" d="M${x.toFixed(1)} ${y.toFixed(1)}q${(nx * 10).toFixed(1)} ${(ny * 10).toFixed(1)} ${(nx * 14 + r).toFixed(1)} ${(ny * 14).toFixed(1)}a${r} ${r} 0 1 1 ${(-r).toFixed(1)} ${(r * .6).toFixed(1)}a${r * .5} ${r * .5} 0 1 1 ${(r * .5).toFixed(1)} ${(-r * .4).toFixed(1)}"/>`;
+    const size = (18 + ((n * 37) % 10) + 7 * Math.sin(Math.min(1, t * 1.6) * Math.PI / 2)) * (1 - t * .38);
+    const k = ((n * 29) % 10) / 10;
+    const ang = a + side * (58 + (n * 17) % 30) + (side > 0 ? 0 : 0);
+    const pet = 5 + (n % 4) * 2;
+    const ex = x + Math.cos(ang * Math.PI / 180) * pet, ey = y + Math.sin(ang * Math.PI / 180) * pet;
+    const tone = ['a', 'b', 'a', 'c', 'b'][n % 5];
+    leaves += `<g class="leaf" style="--t:${t.toFixed(3)}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><path class="petiole" d="M0 0L${(ex - x).toFixed(1)} ${(ey - y).toFixed(1)}"/><g transform="translate(${(ex - x).toFixed(1)} ${(ey - y).toFixed(1)}) rotate(${(ang + side * 8).toFixed(1)})"><path fill="url(#vine-${tone})" d="${ivy(size, k)}"/><path class="vein" d="${ivyVeins(size, k)}"/></g></g>`;
+    if (n % 7 === 4) {
+      const r = 4 + (n % 3);
+      curls += `<path class="curl" style="--t:${t.toFixed(3)}" d="M${x.toFixed(1)} ${y.toFixed(1)}q${(nx * 8).toFixed(1)} ${(ny * 8).toFixed(1)} ${(nx * 12 + r).toFixed(1)} ${(ny * 12).toFixed(1)}a${r} ${r} 0 1 1 ${(-r).toFixed(1)} ${(r * .6).toFixed(1)}a${r * .5} ${r * .5} 0 1 1 ${(r * .5).toFixed(1)} ${(-r * .4).toFixed(1)}"/>`;
     }
   }
-  const svg = `<svg class="vine" aria-hidden="true" width="${W + pad * 2}" height="${H + pad * 2}" viewBox="0 0 ${W + pad * 2} ${H + pad * 2}"><defs>
-<linearGradient id="vine-bark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b5f3e"/><stop offset="1" stop-color="#8d8160"/></linearGradient>
-<linearGradient id="vine-a" x1="0" y1="-1" x2="0" y2="1"><stop offset="0" stop-color="#7f8c50"/><stop offset=".55" stop-color="#55623a"/><stop offset="1" stop-color="#3c4628"/></linearGradient>
-<linearGradient id="vine-b" x1="0" y1="-1" x2="0" y2="1"><stop offset="0" stop-color="#99a066"/><stop offset=".6" stop-color="#6b7646"/><stop offset="1" stop-color="#4c5732"/></linearGradient>
-<linearGradient id="vine-c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9bf9c"/><stop offset=".6" stop-color="#8c967a"/><stop offset="1" stop-color="#707a5c"/></linearGradient>
-</defs><path class="stem" pathLength="1" d="${stem}"/>${curls}${leaves}</svg>`;
+  // brotes tiernos en la punta
+  const [bx, by, ba] = at(total);
+  leaves += `<g class="leaf" style="--t:1" transform="translate(${bx.toFixed(1)} ${by.toFixed(1)}) rotate(${ba.toFixed(1)})"><path fill="url(#vine-c)" d="${ivy(8, .3)}"/></g>`;
+  const svg = `<svg class="vine" aria-hidden="true" width="${W + pad * 2}" height="${H + pad * 2}" viewBox="0 0 ${W + pad * 2} ${H + pad * 2}" style="left:-${pad}px;top:-${pad}px"><defs>
+<linearGradient id="vine-bark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5e5236"/><stop offset=".5" stop-color="#7a6c47"/><stop offset="1" stop-color="#8f8462"/></linearGradient>
+<radialGradient id="vine-a" cx=".3" cy=".35" r=".9"><stop offset="0" stop-color="#7f8d4e"/><stop offset=".55" stop-color="#4f5d33"/><stop offset="1" stop-color="#344023"/></radialGradient>
+<radialGradient id="vine-b" cx=".3" cy=".35" r=".9"><stop offset="0" stop-color="#9aa565"/><stop offset=".6" stop-color="#65723f"/><stop offset="1" stop-color="#46522c"/></radialGradient>
+<radialGradient id="vine-c" cx=".3" cy=".35" r=".9"><stop offset="0" stop-color="#b8bf86"/><stop offset=".6" stop-color="#8b9759"/><stop offset="1" stop-color="#5f6b3a"/></radialGradient>
+<filter id="vine-shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="1.6" stdDeviation="1.4" flood-color="#2b2716" flood-opacity=".28"/></filter>
+</defs><g filter="url(#vine-shadow)">${stems}${twin}${curls}${leaves}</g></svg>`;
   panel.querySelector('.vine')?.remove();
   panel.insertAdjacentHTML('beforeend', svg);
 };
